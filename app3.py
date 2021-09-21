@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from pythonwork import *
 
-UPLOAD_FOLDER = 'C:/Users/pharsh/Desktop/MyFiles/python/transferworkproject/uploads'
+UPLOAD_FOLDER = 'C:/Users/pharsh/Desktop/MyFiles/pythoncode/transferworkproject2/uploads'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -25,7 +25,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filepath = request.form['text']
-            pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\python\transferworkproject\uploads\{filename}', filepath)
+            pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{filename}', filepath)
             return redirect(url_for('download_file', name=filename))
     return render_template('index.html')
 
