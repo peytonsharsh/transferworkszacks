@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 from pythonwork import *
 
@@ -25,8 +25,12 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filepath = request.form['text']
-            pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{filename}', filepath)
-            return redirect(url_for('download_file', name=filename))
+            if filepath == '':
+                flash("not a valid filepath")
+                return redirect(request.url)
+            if filepath != '':
+                pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{filename}', filepath)
+                return redirect(url_for('download_file', name=filename))
     return render_template('index.html')
 
 from flask import send_from_directory
