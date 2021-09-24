@@ -7,11 +7,18 @@
       </head>
       <body>
          <h1>Transfer Work</h1>
-         <form method=post enctype=multipart/form-data>
-            <input type=file name=file>
-            <input type=url name=text>
-            <input type=submit value=Upload>
-         </form>
+            {% with messages = get_flashed_messages() %}
+               {% if messages %}
+                  {% for message in messages %}
+                     <h3 style="color:red;">{{ message }}</h3>
+                  {% endfor %}
+               {% endif %}
+            {% endwith %}
+               <form method=post enctype=multipart/form-data>
+                  <input type=file name=file>
+                  <input type=url name=text>
+                  <input type=submit value=Upload>
+               </form>
          <p1>Enter your orgin file through the "Choose File" option above.  Then enter the pathway for the new file to the right of it.  The new file will be loaded into the chosen destination automatically.</p1>
       </body>
    </html>

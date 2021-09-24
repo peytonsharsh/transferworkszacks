@@ -8,6 +8,7 @@ UPLOAD_FOLDER = 'C:/Users/pharsh/Desktop/MyFiles/pythoncode/transferworkproject2
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'txt', 'xlsx'}
+app.secret_key = "dont tell anyone"
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -17,19 +18,22 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
+            flash('no file uploaded', "error")
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
+            flash("Invalid File")
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filepath = request.form['text']
             if filepath == '':
-                flash("not a valid filepath")
+                flash("Not A Valid Filepath")
                 return redirect(request.url)
             if filepath != '':
                 pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{filename}', filepath)
+                ##flash('your file is now available for use at the path specified', "info")
                 return redirect(url_for('download_file', name=filename))
     return render_template('index.html')
 
@@ -37,7 +41,8 @@ from flask import send_from_directory
 
 @app.route('/uploads/<name>')
 def download_file(name):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
-
+    send_from_directory(app.config["UPLOAD_FOLDER"], name)
+    deleteupload(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{name}')
+    return render_template('index.html')
 if __name__ == '__main__':
     app.run(debug=True)
