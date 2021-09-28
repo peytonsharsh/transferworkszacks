@@ -45,6 +45,9 @@ def download_file(name):
     send_from_directory(app.config["UPLOAD_FOLDER"], name)
     deleteupload(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{name}')
     return render_template('index.html')
-    
+
+@app.route('/instructions.html')
+def show_instructions():
+    return render_template('instructions.html')
 if __name__ == '__main__':
     app.run(debug=True)
