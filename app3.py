@@ -34,7 +34,8 @@ def upload_file():
             if filepath != '':
                 pythonfunction(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{filename}', filepath)
                 ##flash('your file is now available for use at the path specified', "info")
-                return redirect(url_for('download_file', name=filename))
+                redirect(url_for('download_file', name=filename))
+                return redirect(request.url)
     return render_template('index.html')
 
 from flask import send_from_directory
@@ -44,5 +45,6 @@ def download_file(name):
     send_from_directory(app.config["UPLOAD_FOLDER"], name)
     deleteupload(fr'C:\Users\pharsh\Desktop\MyFiles\pythoncode\transferworkproject2\uploads\{name}')
     return render_template('index.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)
