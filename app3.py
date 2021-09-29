@@ -7,7 +7,7 @@ UPLOAD_FOLDER = 'C:/Users/pharsh/Desktop/MyFiles/pythoncode/transferworkproject2
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-ALLOWED_EXTENSIONS = {'txt', 'xlsx'}
+ALLOWED_EXTENSIONS = {'xlsx'}
 app.secret_key = "dont tell anyone"
 
 def allowed_file(filename):
